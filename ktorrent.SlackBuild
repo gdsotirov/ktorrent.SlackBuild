@@ -7,7 +7,7 @@
 . /etc/slack-package.conf
 
 NAME=ktorrent
-VERSION=2.1
+VERSION=2.1.1
 BUILD=1
 
 cd $TMP
@@ -20,19 +20,16 @@ CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
 ./configure --build=$ARCH-pc-linux-gnu \
             --prefix=/opt/kde
-make
+unsermake
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make prefix=$PKG/opt/kde install
+unsermake prefix=$PKG/opt/kde install
 
-( cd $PKG
-  bin_perms $PKG
-  strip_bin
-  strip_lib )
-( cd $SRC
-  create_docs $PKG $NAME-$VERSION )
+bin_perms $PKG
+( cd $PKG; strip_bin; strip_lib )
+( cd $SRC; create_docs $PKG $NAME-$VERSION )
 
 mkdir -p $PKG/install
 install -m 644 $CWD/slack-desc     $PKG/install
