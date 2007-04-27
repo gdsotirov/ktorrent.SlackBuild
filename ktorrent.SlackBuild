@@ -4,10 +4,10 @@
 # Written by Georgi D. Sotirov <gdsotirov@dir.bg>
 #
 
-. /etc/slack-package.conf
+. ../slack-package.conf
 
 NAME=ktorrent
-VERSION=2.1.3
+VERSION=2.1.4
 BUILD=1
 
 cd $TMP
@@ -20,12 +20,18 @@ CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
 ./configure --build=$ARCH-pc-linux-gnu \
             --prefix=/opt/kde
-unsermake
+make all
+# I don't know why but make doesn't recurse in this directory and thus the
+# binaries are not build. So I'm doing this manually
+( cd $SRC/apps; make all )
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-unsermake prefix=$PKG/opt/kde install
+make prefix=$PKG/opt/kde install
+# I don't know why but make doesn't recurse in this directory and thus the
+# binaries are not installed. So I'm doing this manually
+( cd $SRC/apps; make prefix=$PKG/opt/kde install )
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
