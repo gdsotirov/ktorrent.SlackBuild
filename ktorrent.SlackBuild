@@ -7,7 +7,7 @@
 . ../slack-package.conf
 
 NAME=ktorrent
-VERSION=2.1.4
+VERSION=2.2
 BUILD=1
 
 cd $TMP
@@ -18,7 +18,8 @@ fix_source
 
 CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
-./configure --build=$ARCH-pc-linux-gnu \
+./configure --build=$ARCH-slackware-linux \
+            --host=$ARCH-slackware-linux \
             --prefix=/opt/kde
 make all
 # I don't know why but make doesn't recurse in this directory and thus the
