@@ -7,7 +7,7 @@
 . ../slack-package.conf
 
 NAME=ktorrent
-VERSION=2.2
+VERSION=2.2.1
 BUILD=1
 
 cd $TMP
