@@ -7,7 +7,7 @@
 . ../slack-package.conf
 
 NAME=ktorrent
-VERSION=2.2.1
+VERSION=2.2.2
 BUILD=1
 
 cd $TMP
@@ -20,8 +20,8 @@ CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
 ./configure --build=$ARCH-slackware-linux \
             --host=$ARCH-slackware-linux \
-            --prefix=/opt/kde
-make all
+            --prefix=/usr
+make all || exit 1
 # I don't know why but make doesn't recurse in this directory and thus the
 # binaries are not build. So I'm doing this manually
 ( cd $SRC/apps; make all )
@@ -29,10 +29,10 @@ make all
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make prefix=$PKG/opt/kde install
+make prefix=$PKG/usr install
 # I don't know why but make doesn't recurse in this directory and thus the
 # binaries are not installed. So I'm doing this manually
-( cd $SRC/apps; make prefix=$PKG/opt/kde install )
+( cd $SRC/apps; make prefix=$PKG/usr install )
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
@@ -42,6 +42,7 @@ mkdir -p $PKG/install
 install -m 644 $CWD/slack-desc     $PKG/install
 install -m 644 $CWD/slack-required $PKG/install
 install -m 644 $CWD/slack-suggests $PKG/install
+
 mkdir -p $PKG/usr/src/slackbuilds/$NAME-$VERSION
 install -m 644 $CWD/slack-desc $PKG/usr/src/slackbuilds/$NAME-$VERSION
 install -m 644 $CWD/slack-required $PKG/usr/src/slackbuilds/$NAME-$VERSION
