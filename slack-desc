@@ -5,7 +5,7 @@ ktorrent: download torrent files and includes features such as: upload and
 ktorrent: download speed capping, Internet searching, UDP Trackers, port
 ktorrent: forwarding with UPnP, IP blocking, importing of partially or fully
 ktorrent: downloaded files, distributed hash tables, protocol encryption,
-ktorrent: bandwidth scheduling, and many more features. Now it comes with
-ktorrent: slick IDEAl GUI interface.
+ktorrent: bandwidth scheduling, and many more features.
+ktorrent:
 ktorrent:
 ktorrent: Packaged by Georgi D. Sotirov (gdsotirov@dir.bg)
