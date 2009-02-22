@@ -7,7 +7,7 @@
 . ../slack-package.conf
 
 NAME=ktorrent
-VERSION=2.2.4
+VERSION=2.2.8
 BUILD=1
 
 cd $TMP
@@ -20,19 +20,20 @@ CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
 ./configure --build=$ARCH-slackware-linux \
             --host=$ARCH-slackware-linux \
-            --prefix=/usr
-make all || exit 1
+            --prefix=/usr || exit 1
+
+make all || exit 2
 # I don't know why but make doesn't recurse in this directory and thus the
 # binaries are not build. So I'm doing this manually
-( cd $SRC/apps; make all )
+#( cd $SRC/apps; make all )
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make prefix=$PKG/usr install
+make prefix=$PKG/usr install || exit 3
 # I don't know why but make doesn't recurse in this directory and thus the
 # binaries are not installed. So I'm doing this manually
-( cd $SRC/apps; make prefix=$PKG/usr install )
+#( cd $SRC/apps; make prefix=$PKG/usr install )
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
